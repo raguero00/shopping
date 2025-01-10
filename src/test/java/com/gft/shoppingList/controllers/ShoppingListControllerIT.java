@@ -1,8 +1,5 @@
 package com.gft.shoppingList.controllers;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.gft.shoppingList.AbstractIntegrationTest;
 import com.gft.shoppingList.domain.dto.ShoppingList;
 import com.gft.shoppingList.services.ShoppingListService;

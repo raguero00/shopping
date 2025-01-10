@@ -2,7 +2,6 @@ package com.gft.shoppingList.services.impl;
 
 import com.gft.shoppingList.domain.dto.Bag;
 import com.gft.shoppingList.domain.entities.BagEntity;
-import com.gft.shoppingList.mappers.BagMapperImpl;
 import com.gft.shoppingList.mappers.Mapper;
 import com.gft.shoppingList.repositories.BagRepository;
 import org.junit.jupiter.api.Assertions;
@@ -11,12 +10,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.testcontainers.shaded.com.fasterxml.jackson.databind.ObjectMapper;
 
 import static com.gft.shoppingList.utils.TestData.Dto.testBag1;
 import static com.gft.shoppingList.utils.TestData.Dto.testBag1WithoutIdAndDates;
-import static com.gft.shoppingList.utils.TestData.Entity.testBagEntity1;
 import static com.gft.shoppingList.utils.TestData.Entity.testBagEntity1WithoutIdAndDates;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;

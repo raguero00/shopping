@@ -9,11 +9,11 @@ public interface ShoppingListService {
 
 	ShoppingList create(ShoppingList shoppingList);
 
-	Optional<ShoppingList> findById(Long id);
+	ShoppingList findById(Long id);
 
 	List<ShoppingList> listShoppingLists();
 
-	void update(Long id, ShoppingList shoppingList);
+	ShoppingList update(Long id, ShoppingList shoppingList);
 
 	void delete(Long id);
 

@@ -27,14 +27,26 @@ public class ShoppingListController {
 
 	@GetMapping(path = "/{id}")
 	public ResponseEntity<ShoppingList> retrieveShoppingList(@PathVariable final Long id) {
-		final Optional<ShoppingList> foundShoppingList = shoppingListService.findById(id);
-		return foundShoppingList.map(shoppingList -> new ResponseEntity<ShoppingList>(shoppingList, HttpStatus.OK))
-			.orElse(new ResponseEntity<ShoppingList>(HttpStatus.NOT_FOUND));
+		final ShoppingList foundShoppingList = shoppingListService.findById(id);
+		return ResponseEntity.ok(foundShoppingList);
 	}
 
 	@GetMapping
 	public ResponseEntity<List<ShoppingList>> listShoppingLists() {
-		return new ResponseEntity<List<ShoppingList>>(shoppingListService.listShoppingLists(), HttpStatus.OK);
+		return ResponseEntity.ok(shoppingListService.listShoppingLists());
+	}
+
+	@PutMapping("/{id}")
+	public ResponseEntity<ShoppingList> updateShoppingList(@PathVariable(value = "id") Long id,
+																												 @RequestBody ShoppingList shoppingList) {
+		final ShoppingList updatedShoppingList = shoppingListService.update(id, shoppingList);
+		return ResponseEntity.ok(updatedShoppingList);
+	}
+
+	@DeleteMapping("/{id}")
+	public ResponseEntity<String> deleteShoppingList(@PathVariable(value = "id") Long id) {
+		shoppingListService.delete(id);
+		return ResponseEntity.ok("ShoppingList deleted successfully!");
 	}
 
 }

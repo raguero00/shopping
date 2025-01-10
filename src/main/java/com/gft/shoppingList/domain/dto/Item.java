@@ -1,6 +1,5 @@
 package com.gft.shoppingList.domain.dto;
 
-import com.gft.shoppingList.domain.entities.BagEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

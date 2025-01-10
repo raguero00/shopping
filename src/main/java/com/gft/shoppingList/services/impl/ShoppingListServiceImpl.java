@@ -2,12 +2,12 @@ package com.gft.shoppingList.services.impl;
 
 import com.gft.shoppingList.domain.dto.ShoppingList;
 import com.gft.shoppingList.domain.entities.ShoppingListEntity;
+import com.gft.shoppingList.exception.ResourceNotFoundException;
 import com.gft.shoppingList.mappers.Mapper;
 import com.gft.shoppingList.repositories.ShoppingListRepository;
 import com.gft.shoppingList.services.ShoppingListService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -37,9 +37,12 @@ public class ShoppingListServiceImpl implements ShoppingListService {
 	}
 
 	@Override
-	public Optional<ShoppingList> findById(Long id) {
-		final Optional<ShoppingListEntity> foundShoppingList = shoppingListRepository.findById(id);
-		return foundShoppingList.map(shoppingListMapper::mapTo);
+	public ShoppingList findById(Long id) {
+		final ShoppingListEntity foundShoppingList = shoppingListRepository.findById(id)
+			.orElseThrow(() -> new ResourceNotFoundException(
+			String.format("Shopping List doesn't exist with given id: %s", id)
+		));
+		return shoppingListMapper.mapTo(foundShoppingList);
 	}
 
 	@Override
@@ -49,13 +52,28 @@ public class ShoppingListServiceImpl implements ShoppingListService {
 	}
 
 	@Override
-	public void update(Long id, ShoppingList shoppingList) {
+	public ShoppingList update(Long id, ShoppingList shoppingList) {
+		ShoppingListEntity foundShoppingList = shoppingListRepository.findById(id)
+			.orElseThrow(() -> new ResourceNotFoundException(
+				String.format("Shopping List doesn't exist with given id: %s", id)
+			));
 
+		foundShoppingList.setName(shoppingList.getName());
+		foundShoppingList.setDescription(shoppingList.getDescription());
+		foundShoppingList.setStatus(shoppingList.getStatus());
+
+		ShoppingListEntity updatedShoppingList = shoppingListRepository.save(foundShoppingList);
+		return shoppingListMapper.mapTo(updatedShoppingList);
 	}
 
 	@Override
 	public void delete(Long id) {
+		ShoppingListEntity foundShoppingList = shoppingListRepository.findById(id)
+			.orElseThrow(() -> new ResourceNotFoundException(
+				String.format("Shopping List doesn't exist with given id: %s", id)
+			));
 
+		shoppingListRepository.deleteById(id);
 	}
 
 }

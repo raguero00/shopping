@@ -59,21 +59,6 @@ public class BagRepositoryIT extends AbstractIntegrationTest {
 		assertThat(foundBag.get().getItems().size()).isGreaterThan(0);
 	}
 
-//	@Test
-//	public void testThatBagCanBeCreatedAndRecalledWithNoShoppingListAndWithItems() {
-////		ShoppingListEntity shoppingListEntity = TestData.Entity.testShoppingListEntity();
-//		BagEntity bagEntity = TestData.Entity.testBagEntity1();
-//		ItemEntity itemEntity1 = TestData.Entity.testItemEntity1(bagEntity);
-//
-//		//bagEntity.setShoppingList(shoppingListEntity);
-//		bagEntity.setItems(Arrays.asList(itemEntity1));
-//		underTest.save(bagEntity);
-//
-//		Optional<BagEntity> foundBag = underTest.findById(bagEntity.getId());
-//		assertThat(foundBag).isPresent();
-//		assertThat(foundBag.get()).isEqualTo(bagEntity);
-//	}
-
 	@Test
 	public void testThatMultipleBagsCanBeCreatedAndRecalledWithNoItems() {
 		BagEntity bagEntity1 = TestData.Entity.testBagEntity1();
