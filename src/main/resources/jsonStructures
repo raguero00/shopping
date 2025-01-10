@@ -1,0 +1,21 @@
+{
+  "name": "Bag 1 Name"
+  "description": "Bag 1 Description",
+  "maxAmount": 300,
+  "status": 1,
+  "creationDate": "2000-01-01T00:00:00"
+}
+
+
+{
+  "description": "Item 1 Description",
+  "originalBarcode": "111111111",
+  "secondaryBarcode": "999999999",
+  "originalAmount": 37.00,
+  "secondaryAmount": 12.25,
+  "receiptNumber": "12345678",
+  "alternateReceiptNumber": "20-1",
+  "storeName": "Store Name",
+  "status": 1,
+  "creationDate": "2000-01-01T00:00:00"
+}
