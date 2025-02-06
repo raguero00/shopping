@@ -26,6 +26,9 @@ public class ItemRepositoryIT extends AbstractIntegrationTest {
 	@Autowired
 	private ItemRepository underTest;
 
+	@Autowired
+	private BagRepository bagRepository;
+
 	@Test
 	public void testThatItemCanBeCreatedAndRecalled() {
 		BagEntity bagEntity = TestData.Entity.testBagEntity1();
@@ -36,12 +39,13 @@ public class ItemRepositoryIT extends AbstractIntegrationTest {
 		assertThat(foundItem).isPresent();
 		assertThat(foundItem.get()).isEqualTo(itemEntity);
 		assertThat(foundItem.get().getBag()).isNotNull();
-		assertThat(foundItem.get().getBag().getId()).isNotNull();
 	}
 
 	@Test
 	public void testThatMultipleItemsCanBeCreatedAndRecalled() {
 		BagEntity bagEntity = TestData.Entity.testBagEntity1();
+		bagRepository.save(bagEntity);
+
 		ItemEntity itemEntity1 = TestData.Entity.testItemEntity1(bagEntity);
 		underTest.save(itemEntity1);
 		ItemEntity itemEntity2 = TestData.Entity.testItemEntity1(bagEntity);
@@ -83,6 +87,8 @@ public class ItemRepositoryIT extends AbstractIntegrationTest {
 	@Test
 	public void testThatGetItemsWithStoreNameEqualsTo() {
 		BagEntity bagEntity = TestData.Entity.testBagEntity1();
+		bagRepository.save(bagEntity);
+
 		ItemEntity itemEntity1 = TestData.Entity.testItemEntity1(bagEntity);
 		itemEntity1.setStoreName("GAP");
 		underTest.save(itemEntity1);

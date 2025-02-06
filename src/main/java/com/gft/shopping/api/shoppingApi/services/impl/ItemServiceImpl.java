@@ -1,6 +1,7 @@
 package com.gft.shopping.api.shoppingApi.services.impl;
 
 import com.gft.shopping.api.shoppingApi.domain.dto.Item;
+import com.gft.shopping.api.shoppingApi.domain.dto.PagedResponse;
 import com.gft.shopping.api.shoppingApi.domain.entities.BagEntity;
 import com.gft.shopping.api.shoppingApi.domain.entities.ItemEntity;
 import com.gft.shopping.api.shoppingApi.exception.ResourceNotFoundException;
@@ -10,6 +11,10 @@ import com.gft.shopping.api.shoppingApi.repositories.BagRepository;
 import com.gft.shopping.api.shoppingApi.repositories.ItemRepository;
 import com.gft.shopping.api.shoppingApi.services.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -47,8 +52,12 @@ public class ItemServiceImpl implements ItemService {
 
 		ItemEntity itemEntity = itemMapper.mapFrom(item);
 		itemEntity.setBag(bagEntity);
-		ItemEntity savedEntity = itemRepository.save(itemEntity);
 
+		if (item.getOriginalAmount() == null) {
+			itemEntity.setOriginalAmount(item.getSecondaryAmount());
+		}
+
+		ItemEntity savedEntity = itemRepository.save(itemEntity);
 		return itemMapper.mapTo(savedEntity);
 	}
 
@@ -56,6 +65,25 @@ public class ItemServiceImpl implements ItemService {
 	public List<Item> listItems(Long idBag) {
 		List<ItemEntity> items = itemRepository.findByBagId(idBag);
 		return items.stream().map(itemMapper::mapTo).collect(Collectors.toList());
+	}
+
+	public PagedResponse<Item> getPagedList(int pageNumber, int pageSize, String orderBy, String sortDirection) {
+		Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(orderBy).ascending() : Sort.by(orderBy).descending();
+		Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
+
+		Page<ItemEntity> items = itemRepository.findAll(pageable);
+		List<ItemEntity> pagedList = items.getContent();
+		List<Item> content = pagedList.stream().map(itemMapper::mapTo).collect(Collectors.toList());
+
+		PagedResponse<Item> pagedResponse = new PagedResponse<Item>();
+		pagedResponse.setContent(content);
+		pagedResponse.setNumber(items.getNumber());
+		pagedResponse.setSize(items.getSize());
+		pagedResponse.setTotalElements(items.getTotalElements());
+		pagedResponse.setTotalPages(items.getTotalPages());
+		pagedResponse.setLast(items.isLast());
+
+		return pagedResponse;
 	}
 
 	@Override

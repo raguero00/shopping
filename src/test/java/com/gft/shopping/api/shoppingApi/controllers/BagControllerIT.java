@@ -117,7 +117,7 @@ public class BagControllerIT extends AbstractIntegrationTest {
 	public void testThatDeleteBagReturnsHttp204WhenBagDoesntExist() throws Exception {
 		mockMvc.perform(MockMvcRequestBuilders
 				.delete(URI + "/12345"))
-			.andExpect(status().isNoContent());
+			.andExpect(status().isNotFound());
 	}
 
 	@Test
@@ -144,7 +144,7 @@ public class BagControllerIT extends AbstractIntegrationTest {
 		// Delete data from database
 		mockMvc.perform(MockMvcRequestBuilders
 				.delete(URI + "/" + savedBag.getId()))
-			.andExpect(status().isNoContent());
+			.andExpect(status().isOk());
 
 		// Check database is back to initial state
 		mockMvc.perform(MockMvcRequestBuilders

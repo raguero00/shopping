@@ -1,6 +1,7 @@
 package com.gft.shopping.api.shoppingApi.controllers;
 
 import com.gft.shopping.api.shoppingApi.domain.dto.Item;
+import com.gft.shopping.api.shoppingApi.domain.dto.PagedResponse;
 import com.gft.shopping.api.shoppingApi.services.ItemService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,6 +33,15 @@ public class ItemController {
 
 		Item updatedItem = itemService.update(idBag, idItem, item);
 		return ResponseEntity.ok(updatedItem);
+	}
+
+	@GetMapping("/{idBag}/items/paged")
+	public ResponseEntity<PagedResponse<Item>> getPagedBags(@RequestParam(value = "pageNo", defaultValue = "0", required = false) int pageNumber,
+																												 @RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize,
+																												 @RequestParam(value = "sortBy", defaultValue = "id", required = false) String orderBy,
+																												 @RequestParam(value = "sortDir", defaultValue = "asc", required = false) String sortDirection) {
+		PagedResponse<Item> response = itemService.getPagedList(pageNumber, pageSize, orderBy, sortDirection);
+		return ResponseEntity.ok(response);
 	}
 
 	@GetMapping("/{idBag}/items")

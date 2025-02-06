@@ -45,7 +45,7 @@ public final class TestData {
 				.status(1)
 				.items(new ArrayList<>())
 				.shoppingLists(new ArrayList<>())
-				.creationDate(LocalDateTime.of(2000, Month.JANUARY, 1, 0, 0, 0))
+				//.creationDate(LocalDateTime.of(2000, Month.JANUARY, 1, 0, 0, 0))
 				.build();
 		}
 
@@ -190,7 +190,6 @@ public final class TestData {
 				.description("Bag 1 Description")
 				.maxAmount(Double.parseDouble("300"))
 				.status(1)
-				.shoppingList(new ArrayList<>())
 				.items(new ArrayList<>())
 				.creationDate(LocalDateTime.of(2000, Month.JANUARY, 1, 0, 0, 0))
 				.build();

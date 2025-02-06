@@ -36,5 +36,6 @@ public class ShoppingListEntity {
 		joinColumns = @JoinColumn(name = "shopping_list_id"),
 		inverseJoinColumns = @JoinColumn(name = "bag_id")
 	)
+	@Builder.Default
 	private List<BagEntity> bags = new ArrayList<>();
 }

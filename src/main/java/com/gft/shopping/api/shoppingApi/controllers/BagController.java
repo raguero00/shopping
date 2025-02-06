@@ -1,6 +1,7 @@
 package com.gft.shopping.api.shoppingApi.controllers;
 
 import com.gft.shopping.api.shoppingApi.domain.dto.Bag;
+import com.gft.shopping.api.shoppingApi.domain.dto.PagedResponse;
 import com.gft.shopping.api.shoppingApi.services.BagService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +19,7 @@ public class BagController {
 		this.bagService = bagService;
 	}
 
-	@PostMapping
+	@PostMapping(consumes = {"application/json"})
 	public ResponseEntity<Bag> createBag(@RequestBody Bag bag) {
 		Bag savedBag = bagService.create(bag);
 		return new ResponseEntity<Bag>(savedBag, HttpStatus.CREATED);
@@ -36,6 +37,15 @@ public class BagController {
 		return ResponseEntity.ok(bags);
 	}
 
+	@GetMapping("/paged")
+	public ResponseEntity<PagedResponse<Bag>> getPagedBags(@RequestParam(value = "pageNo", defaultValue = "0", required = false) int pageNumber,
+																												 @RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize,
+																												 @RequestParam(value = "sortBy", defaultValue = "id", required = false) String orderBy,
+																												 @RequestParam(value = "sortDir", defaultValue = "asc", required = false) String sortDirection) {
+		PagedResponse<Bag> response = bagService.getPagedList(pageNumber, pageSize, orderBy, sortDirection);
+		return ResponseEntity.ok(response);
+	}
+
 	@PutMapping(path = "/{id}")
 	public ResponseEntity<Bag> updateBag(@PathVariable final Long id, @RequestBody final Bag bag) {
 		Bag updatedBag = bagService.update(id, bag);
@@ -47,4 +57,5 @@ public class BagController {
 		bagService.delete(id);
 		return ResponseEntity.ok("Bag deleted successfully!");
 	}
+
 }

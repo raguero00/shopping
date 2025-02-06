@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -38,6 +39,15 @@ public class BagEntity {
 	private List<ShoppingListEntity> shoppingLists;
 
 	@OneToMany(mappedBy = "bag", cascade = CascadeType.ALL)
-	private List<ItemEntity> items;
+	@Builder.Default
+	private List<ItemEntity> items = new ArrayList<>();
+
+	public void addItem(ItemEntity item) {
+		items.add(item);
+	}
+
+	public void removeItem(ItemEntity item) {
+		items.remove(item);
+	}
 
 }

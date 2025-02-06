@@ -1,5 +1,6 @@
 package com.gft.shopping.api.shoppingApi.domain.dto;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

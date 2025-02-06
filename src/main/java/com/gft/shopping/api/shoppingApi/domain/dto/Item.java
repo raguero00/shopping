@@ -1,5 +1,6 @@
 package com.gft.shopping.api.shoppingApi.domain.dto;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -25,5 +26,6 @@ public class Item {
 	private String storeName;
 	private LocalDateTime creationDate;
 	private int status;
+	private Long bagId;
 
 }
